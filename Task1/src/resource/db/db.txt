@@ -1,0 +1,6 @@
+Oven : PPP=20, weight=3023;
+Oven : PPP=30, weight=3023;
+Oven : PPP=50, weight=3023;
+Hui : PPP=20, weight=3023;
+Lop : PPP=20, weight=3023;
+asd : PPP=20, weight=3023;
