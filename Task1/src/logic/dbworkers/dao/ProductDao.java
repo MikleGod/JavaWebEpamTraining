@@ -78,7 +78,8 @@ public class ProductDao implements DbManager {
             String line = scanner.nextLine();
             String[] tempLine_1 = line.split(":");
             String tempName = tempLine_1[0].trim();
-            names.add(tempName);
+            if (!names.contains(tempName))
+                names.add(tempName);
         }
         scanner.close();
         return names;
@@ -91,11 +92,15 @@ public class ProductDao implements DbManager {
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
             String[] tempLine_1 = line.split(":");
-            tempLine_1[1] = tempLine_1[1].replaceAll(";", "");
-            String[] tempLine_2 = tempLine_1[1].split(",");
-            for (String s : tempLine_2) {
-                String[] tempLine_3 = s.split("=");
-                attributes.add(new Attribute(tempLine_3[0].trim(), Double.parseDouble(tempLine_3[1].trim())));
+            if (tempLine_1[0].trim().equals(productName)) {
+                tempLine_1[1] = tempLine_1[1].replaceAll(";", "");
+                String[] tempLine_2 = tempLine_1[1].split(",");
+                for (String s : tempLine_2) {
+                    String[] tempLine_3 = s.split("=");
+                    Attribute attribute = new Attribute(tempLine_3[0].trim(), Double.parseDouble(tempLine_3[1].trim()));
+                    attributes.add(attribute);
+                }
+                break;
             }
         }
         scanner.close();
@@ -119,19 +124,20 @@ public class ProductDao implements DbManager {
             String[] tempLine_2 = tempLine_1[1].split(",");
             for (String s : tempLine_2) {
                 String[] tempLine_3 = s.split("=");
-                tempAttributes.add(new Attribute(tempLine_3[0].trim(), Double.parseDouble(tempLine_3[1].trim())));
+                Attribute attribute = new Attribute(tempLine_3[0].trim(), Double.parseDouble(tempLine_3[1].trim()));
+                tempAttributes.add(attribute);
             }
             if (tempName.equals(name)) {
                 for (Attribute attribute : attributes) {
                     for (Attribute tempAttribute : tempAttributes) {
-                        if (tempAttribute.equals(attribute)) {
+                        if (tempAttribute.getName().equals(attribute.getName()) && tempAttribute.getCost().equals(attribute.getCost())) {
                             foundProducts.add(new Product(name, tempAttributes));
-                            scanner.close();
                             break;
                         }
                     }
                 }
             }
         }
+        scanner.close();
     }
 }

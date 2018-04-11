@@ -27,8 +27,8 @@ public class ActionPanel {
         }
         ActionInterface action;
         String userAns = "";
+        View.print(PropertiesManager.getManager().getMessagesProperty("message.action") + actionNames);
         while ((action = validator.validateAction(userAns)) == null){
-            View.print(PropertiesManager.getManager().getMessagesProperty("message.action") + actionNames);
             userAns = View.readString();
         }
         action.execute(this);

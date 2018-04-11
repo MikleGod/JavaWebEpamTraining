@@ -25,17 +25,17 @@ public class FindProductAction implements presenter.lifecycle.action.ActionInter
 
     private List<Attribute> getAttributes(String productName) {
         List<Attribute> attributes = new ArrayList<>();
-        do {
-            View.print(
-                    PropertiesManager.getManager().getMessagesProperty("message.attributes_name")
-                            + showPossibleAttributes(productName)
-            );
-            String attrName = View.readString();
-            View.print(PropertiesManager.getManager().getMessagesProperty("message.attribute_value"));
-            Double value = View.readDouble();
-            View.print(PropertiesManager.getManager().getMessagesProperty("message.next_attr"));
-            attributes.add(new Attribute(attrName, value));
-        } while (View.readString().equals("y"));
+        //String ans = "";
+        View.print(
+                PropertiesManager.getManager().getMessagesProperty("message.attributes_name")
+                        + showPossibleAttributes(productName)
+        );
+        String attrName = View.readString();
+        View.print(PropertiesManager.getManager().getMessagesProperty("message.attribute_value"));
+        Double value = View.readDouble();
+        //View.print(PropertiesManager.getManager().getMessagesProperty("message.next_attr"));
+        attributes.add(new Attribute(attrName, value));
+        //ans = View.readString();
         return attributes;
     }
 
@@ -43,7 +43,7 @@ public class FindProductAction implements presenter.lifecycle.action.ActionInter
         List<Attribute> possibleAttrs = Presenter.getDbManager().findAttributes(productName);
         String possibleAtt = "";
         for (Attribute possibleAttr : possibleAttrs) {
-            possibleAtt += " " + possibleAttr;
+            possibleAtt += " " + possibleAttr.getName();
         }
         return possibleAtt;
     }
