@@ -1,19 +1,17 @@
 package logic.entity;
 
+import java.util.Objects;
+
 public class Attribute {
     private String name;
-    private Double cost;
+    private String value;
 
     public Attribute() {
     }
 
-    public Attribute(String name) {
+    public Attribute(String name, String value) {
         this.name = name;
-    }
-
-    public Attribute(String name, Double cost) {
-        this.name = name;
-        this.cost = cost;
+        this.value = value;
     }
 
     public String getName() {
@@ -24,34 +22,34 @@ public class Attribute {
         this.name = name;
     }
 
-    public Double getCost() {
-        return cost;
+    public String getValue() {
+        return value;
     }
 
-    public void setCost(Double cost) {
-        this.cost = cost;
+    public void setValue(String value) {
+        this.value = value;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (o != null)
-            return false;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Attribute attribute = (Attribute) o;
-        return attribute.getCost() != null && attribute.getName() != null && attribute.getName().equals(name) && attribute.getCost().equals(cost) ;
+        return name.equalsIgnoreCase(attribute.name) &&
+                value.equalsIgnoreCase(attribute.value);
     }
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (cost != null ? cost.hashCode() : 0);
-        return result;
+
+        return Objects.hash(name, value);
     }
 
     @Override
     public String toString() {
-        return "Attribute{" +
+        return "Attribute " +
                 "name='" + name + '\'' +
-                ", cost=" + cost +
+                ", value='" + value + '\'' +
                 '}';
     }
 }

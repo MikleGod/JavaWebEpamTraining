@@ -2,6 +2,7 @@ package logic.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Product {
     private String name;
@@ -33,6 +34,21 @@ public class Product {
 
     public void setAttributes(List<Attribute> attributes) {
         this.attributes = attributes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return  name.equalsIgnoreCase(product.name)&&
+                attributes.equals(product.attributes);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(name, attributes);
     }
 
     @Override

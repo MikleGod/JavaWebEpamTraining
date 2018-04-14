@@ -8,7 +8,7 @@ public class Authentication {
 
         boolean pass = false;
         View.print(PropertiesManager.getManager().getMessagesProperty("message.welcome"));
-        if (View.readString().equals("n")){
+        if (View.readString().equalsIgnoreCase("n")){
             while (!pass){
                 View.print(PropertiesManager.getManager().getMessagesProperty("message.admin"));
                 String login = View.readString();

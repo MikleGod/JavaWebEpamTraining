@@ -54,15 +54,16 @@ public class ProductDao implements DbManager {
         Scanner scanner = new Scanner(reader);
         List<Product> products = new ArrayList<>();
         while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
+            String line = scanner.nextLine().trim();
+            if(line.isEmpty()) continue;
             List<Attribute> tempAttributes = new ArrayList<>();
             String[] tempLine_1 = line.split(":");
             String tempName = tempLine_1[0].trim();
             tempLine_1[1] = tempLine_1[1].replaceAll(";", "");
             String[] tempLine_2 = tempLine_1[1].split(",");
             for (String s : tempLine_2) {
-                String[] tempLine_3 = s.split("=");
-                tempAttributes.add(new Attribute(tempLine_3[0].trim(), Double.parseDouble(tempLine_3[1].trim())));
+                String[] tempLine_3 = s.trim().split("=");
+                tempAttributes.add(new Attribute(tempLine_3[0], tempLine_3[1]));
             }
             products.add(new Product(tempName, tempAttributes));
         }
@@ -75,7 +76,8 @@ public class ProductDao implements DbManager {
         List<String> names = new ArrayList<>();
         Scanner scanner = new Scanner(initReader());
         while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
+            String line = scanner.nextLine().trim();
+            if(line.isEmpty()) continue;
             String[] tempLine_1 = line.split(":");
             String tempName = tempLine_1[0].trim();
             if (!names.contains(tempName))
@@ -90,14 +92,15 @@ public class ProductDao implements DbManager {
         Scanner scanner = new Scanner(initReader());
         List<Attribute> attributes = new ArrayList<>();
         while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
+            String line = scanner.nextLine().trim();
+            if(line.isEmpty()) continue;
             String[] tempLine_1 = line.split(":");
             if (tempLine_1[0].trim().equals(productName)) {
                 tempLine_1[1] = tempLine_1[1].replaceAll(";", "");
                 String[] tempLine_2 = tempLine_1[1].split(",");
                 for (String s : tempLine_2) {
-                    String[] tempLine_3 = s.split("=");
-                    Attribute attribute = new Attribute(tempLine_3[0].trim(), Double.parseDouble(tempLine_3[1].trim()));
+                    String[] tempLine_3 = s.trim().split("=");
+                    Attribute attribute = new Attribute(tempLine_3[0], tempLine_3[1].trim());
                     attributes.add(attribute);
                 }
                 break;
@@ -116,21 +119,22 @@ public class ProductDao implements DbManager {
         FileReader reader = initReader();
         Scanner scanner = new Scanner(reader);
         while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
+            String line = scanner.nextLine().trim();
+            if(line.isEmpty()) continue;
             List<Attribute> tempAttributes = new ArrayList<>();
             String[] tempLine_1 = line.split(":");
             String tempName = tempLine_1[0].trim();
             tempLine_1[1] = tempLine_1[1].replaceAll(";", "");
             String[] tempLine_2 = tempLine_1[1].split(",");
             for (String s : tempLine_2) {
-                String[] tempLine_3 = s.split("=");
-                Attribute attribute = new Attribute(tempLine_3[0].trim(), Double.parseDouble(tempLine_3[1].trim()));
+                String[] tempLine_3 = s.trim().split("=");
+                Attribute attribute = new Attribute(tempLine_3[0].trim(), tempLine_3[1].trim());
                 tempAttributes.add(attribute);
             }
             if (tempName.equals(name)) {
                 for (Attribute attribute : attributes) {
                     for (Attribute tempAttribute : tempAttributes) {
-                        if (tempAttribute.getName().equals(attribute.getName()) && tempAttribute.getCost().equals(attribute.getCost())) {
+                        if (tempAttribute.getName().equals(attribute.getName()) && tempAttribute.getValue().equals(attribute.getValue())) {
                             foundProducts.add(new Product(name, tempAttributes));
                             break;
                         }

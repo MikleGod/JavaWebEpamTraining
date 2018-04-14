@@ -37,7 +37,7 @@ public class ActionPanel {
     private class Validator{
         ActionInterface validateAction(String userAns){
             for (ActionInterface act : actions) {
-                if (act.getName().equals(userAns)) {
+                if (act.getName().equalsIgnoreCase(userAns)) { // Give user possibility write lower case, please!
                     return act;
                 }
             }

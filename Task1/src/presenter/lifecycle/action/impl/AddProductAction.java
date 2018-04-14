@@ -39,7 +39,7 @@ public class AddProductAction implements presenter.lifecycle.action.ActionInterf
             String[] pairs = attributes.split(";");
             for (String pair : pairs) {
                 String[] whiteWalkers = pair.split("=");
-                att.add(new Attribute(whiteWalkers[0], Double.parseDouble(whiteWalkers[1])));
+                att.add(new Attribute(whiteWalkers[0], whiteWalkers[1]));
             }
             return att;
         }

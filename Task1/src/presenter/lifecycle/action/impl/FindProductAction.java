@@ -25,17 +25,14 @@ public class FindProductAction implements presenter.lifecycle.action.ActionInter
 
     private List<Attribute> getAttributes(String productName) {
         List<Attribute> attributes = new ArrayList<>();
-        //String ans = "";
         View.print(
                 PropertiesManager.getManager().getMessagesProperty("message.attributes_name")
                         + showPossibleAttributes(productName)
         );
         String attrName = View.readString();
         View.print(PropertiesManager.getManager().getMessagesProperty("message.attribute_value"));
-        Double value = View.readDouble();
-        //View.print(PropertiesManager.getManager().getMessagesProperty("message.next_attr"));
+        String value = View.readString();
         attributes.add(new Attribute(attrName, value));
-        //ans = View.readString();
         return attributes;
     }
 

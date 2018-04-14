@@ -10,12 +10,8 @@ public class View {
         if (o != null)
             System.out.println(o);
     }
-
     public static String readString() {
         return scanner.nextLine();
     }
 
-    public static double readDouble() {
-        return scanner.nextDouble();
-    }
 }
