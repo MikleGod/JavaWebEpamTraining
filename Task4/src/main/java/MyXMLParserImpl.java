@@ -24,28 +24,15 @@ public class MyXMLParserImpl implements MyXMLParser {
     private MyXMLParserImpl(Scanner scanner){
         this.scanner = scanner;
         parseFirstTag(findFirstTag());
-        //TODO заинить инфу о первом тэге
-    }
-
-    private String findFirstTag() {
-        scanner.useDelimiter(tagBegin).next();
-        return scanner.useDelimiter(tagEnd).next().replaceAll(tagBegin, emptySymbol).trim();
-    }
-
-    private void parseFirstTag(String rootTag) {
-        String[] nameAndAttrs = rootTag.split(whiteSpace);
-        tagName = nameAndAttrs[0];
-        attributes = new HashMap<String, String>();
-        for (int i = 1; i<nameAndAttrs.length; i++){
-            String[] attrAndValue = nameAndAttrs[i].split(equals);
-            attributes.put(attrAndValue[0], attrAndValue[1].replaceAll(quotes, emptySymbol));
-        }
-        content = scanner.useDelimiter(tagBegin).next().replaceAll(tagEnd, emptySymbol).trim();
     }
 
     public MyXMLParser next() {
-        parseTag(findNextTag());
-        return this;
+        try {
+            parseTag(findNextTag());
+        } catch (Exception e){
+            scanner.close();
+        }
+        return null;
     }
 
     public boolean isEmpty() {
@@ -62,6 +49,27 @@ public class MyXMLParserImpl implements MyXMLParser {
 
     public String getTagName() {
         return tagName;
+    }
+
+    @Override
+    public void close() {
+        scanner.close();
+    }
+
+    private String findFirstTag() {
+        scanner.useDelimiter(tagBegin).next();
+        return scanner.useDelimiter(tagEnd).next().replaceAll(tagBegin, emptySymbol).trim();
+    }
+
+    private void parseFirstTag(String rootTag) {
+        String[] nameAndAttrs = rootTag.split(whiteSpace);
+        tagName = nameAndAttrs[0];
+        attributes = new HashMap<String, String>();
+        for (int i = 1; i<nameAndAttrs.length; i++){
+            String[] attrAndValue = nameAndAttrs[i].split(equals);
+            attributes.put(attrAndValue[0], attrAndValue[1].replaceAll(quotes, emptySymbol));
+        }
+        content = scanner.useDelimiter(tagBegin).next().replaceAll(tagEnd, emptySymbol).trim();
     }
 
     private String findNextTag() {

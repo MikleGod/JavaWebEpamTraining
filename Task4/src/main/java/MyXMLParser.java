@@ -5,4 +5,5 @@ public interface MyXMLParser {
     String getAttribute(String key);
     String getContent();
     String getTagName();
+    void close();
 }
